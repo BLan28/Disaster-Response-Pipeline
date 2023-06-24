@@ -30,12 +30,15 @@ def clean_data(df):
         # convert column from string to numeric
         categories[column] = pd.to_numeric(categories[column])
     
+    categories = categories[categories['related'] != 2]
+    
     # drop the original categories column from `df`
     df.drop(columns=['categories'], axis = 1, inplace = True)
     df = pd.concat([df, categories], axis=1)
     
     # drop duplicates
     df = df.drop_duplicates()
+    df = df.dropna()
     
     return df
 
